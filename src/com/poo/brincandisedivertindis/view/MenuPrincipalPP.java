@@ -1,6 +1,10 @@
 package com.poo.brincandisedivertindis.view;
 
+import com.poo.brincandisedivertindis.controladores.CadastroEstacionamentoPP;
+import com.poo.brincandisedivertindis.controladores.CadastroVagaPP;
 import com.poo.brincandisedivertindis.controladores.CadastroVeiculoPP;
+import com.poo.brincandisedivertindis.controladores.GeralPP;
+import com.poo.brincandisedivertindis.entidades.*;
 import com.poo.brincandisedivertindis.util.ConsolePP;
 
 public class MenuPrincipalPP {
@@ -12,15 +16,22 @@ public class MenuPrincipalPP {
         private static final int VERIFICAR_VAGA = 6;
         private static final int VERIFICAR_VAGAS_DISPONIVEIS = 7;
         private static final int VERIFICAR_VAGA_VEICULO = 8;
+        private static final int CONSULTAR_DADOS = 9;
         private static final int SAIR = 0;
 
 
     private ConsolePP console;
     private CadastroVeiculoPP cadastroVeiculosControlador;
+    private CadastroVagaPP cadastroVagasControlador;
+    private CadastroEstacionamentoPP cadastroEstacionamentoControlador;
+    private GeralPP geralControlador;
 
-    public MenuPrincipalPP(ConsolePP console, CadastroVeiculoPP cadastroVeiculosControlador) {
+    public MenuPrincipalPP(ConsolePP console, CadastroVeiculoPP cadastroVeiculosControlador, CadastroVagaPP cadastroVagasControlador, CadastroEstacionamentoPP cadastroEstacionamentoControlador, GeralPP geralControlador) {
         this.console = console;
         this.cadastroVeiculosControlador = cadastroVeiculosControlador;
+        this.cadastroVagasControlador = cadastroVagasControlador;
+        this.cadastroEstacionamentoControlador = cadastroEstacionamentoControlador;
+        this.geralControlador = geralControlador;
     }
 
         public void run() {
@@ -34,8 +45,10 @@ public class MenuPrincipalPP {
                     console.escreve("4) Cadastrar vaga");
                     console.escreve("5) Registrar um estacionamento");
                     console.escreve("6) Verificar a disponibilidade de uma vaga");
-                    console.escreve("6) Verificar vagas disponíveis");
-                    console.escreve("6) Verificar onde um veículo está estacionado");
+                    console.escreve("7) Verificar vagas ocupadas e disponíveis");
+                    console.escreve("8) Verificar onde um veículo está estacionado");
+                    console.escreve("9) Relatório de cadastros");
+                    console.escreve("0) Sair");
                     console.escreve("------------------------------");
 
                     console.escreve("Digite uma opção: ");
@@ -44,28 +57,36 @@ public class MenuPrincipalPP {
 
                     switch (opcao) {
                         case CADASTRAR_VEICULO:
-                            cadastroVeiculosControlador.cadastrarVeiculo();
-                            break;
-                        case CADASTRAR_MARCA:
-//                            cadastroVeiculosControlador.;
+                            VeiculoPP veiculo = cadastroVeiculosControlador.preencherDadosVeiculo();
+                            cadastroVeiculosControlador.cadastrarVeiculo(veiculo);
                             break;
                         case CADASTRAR_MODELO:
-//                            cadastroVeiculosControlador.;
+                            ModeloPP modelo = cadastroVeiculosControlador.preencherDadosModelo();
+                            cadastroVeiculosControlador.cadastrarModelo(modelo);
+                            break;
+                        case CADASTRAR_MARCA:
+                            MarcaPP marca = cadastroVeiculosControlador.preencherDadosMarca();
+                            cadastroVeiculosControlador.cadastrarMarca(marca);
                             break;
                         case CADASTRAR_VAGA:
-//                            cadastroVeiculosControlador.;
+                            VagasPP vagas = cadastroVagasControlador.preencherDados();
+                            cadastroVagasControlador.cadastrarVaga(vagas);
                             break;
                         case REGISTRAR_ESTACIONAMENTO:
-//                            cadastroVeiculosControlador.;
+                            EstacionamentoPP estacionamento = cadastroEstacionamentoControlador.preencherDadosEstacionamento();
+                            cadastroEstacionamentoControlador.cadastrarEstacionamento(estacionamento);
                             break;
                         case VERIFICAR_VAGA:
-//                            cadastroVeiculosControlador.;
+                            cadastroVagasControlador.verificarVaga();
                             break;
                         case VERIFICAR_VAGAS_DISPONIVEIS:
-//                            cadastroVeiculosControlador.;
+                            cadastroVagasControlador.verificarVagasDisponiveis();
                             break;
                         case VERIFICAR_VAGA_VEICULO:
-//                            cadastroVeiculosControlador.;
+                            cadastroVagasControlador.verificarVagaVeiculo();
+                            break;
+                        case CONSULTAR_DADOS:
+                            geralControlador.relatorioCadastros();
                             break;
                         case SAIR:
                             sair = true;
